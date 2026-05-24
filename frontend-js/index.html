@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polyglot Cloud | Admin Console</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: 0.3s; }
+        .glass-card:hover { border-color: #6366f1; transform: translateY(-5px); }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    <aside class="w-64 bg-slate-900 border-r border-slate-800 p-6 hidden md:block">
+        <h2 class="text-2xl font-bold text-indigo-500 mb-10"><i class="fa-solid fa-layer-group mr-2"></i>Polyglot</h2>
+        <nav class="space-y-4">
+            <a href="#" class="block p-3 bg-indigo-600 rounded-lg text-white"><i class="fa-solid fa-chart-line mr-3"></i>Dashboard</a>
+            <a href="#" class="block p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition"><i class="fa-solid fa-server mr-3"></i>Containers</a>
+            <a href="#" class="block p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition"><i class="fa-solid fa-network-wired mr-3"></i>Swarm Nodes</a>
+            <a href="#" class="block p-3 text-slate-400 hover:bg-slate-800 rounded-lg transition"><i class="fa-solid fa-gear mr-3"></i>Settings</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-3xl font-bold">Cloud Infrastructure Dashboard</h1>
+                <p class="text-slate-400">Monitoring services across .NET, Python, and Node.js</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="flex items-center text-emerald-400 text-sm font-medium">
+                    <span id="status-dot" class="w-2 h-2 bg-emerald-400 rounded-full mr-2 pulse"></span> 
+                    <span id="system-msg">System Healthy</span>
+                </span>
+                <img src="https://ui-avatars.com/api/?name=Fatima&background=6366f1&color=fff" class="w-10 h-10 rounded-full border-2 border-indigo-500">
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fa-solid fa-microchip text-indigo-400 text-2xl"></i>
+                    <span class="text-xs font-bold text-slate-500 uppercase">Backend</span>
+                </div>
+                <h3 class="text-slate-400 text-sm mb-1">API Service</h3>
+                <p id="backend-status" class="text-2xl font-bold text-indigo-300">Connecting...</p>
+                <div class="mt-4 w-full bg-slate-700 h-1.5 rounded-full">
+                    <div id="backend-bar" class="bg-indigo-500 h-1.5 rounded-full transition-all duration-500" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fa-brands fa-python text-yellow-400 text-2xl"></i>
+                    <span class="text-xs font-bold text-slate-500 uppercase">Worker</span>
+                </div>
+                <h3 class="text-slate-400 text-sm mb-1">Data Processor</h3>
+                <p class="text-2xl font-bold">Python 3.9</p>
+                <div class="mt-4 flex space-x-1">
+                    <span class="h-4 w-1 bg-indigo-500 rounded-full"></span>
+                    <span class="h-6 w-1 bg-indigo-500 rounded-full"></span>
+                    <span class="h-3 w-1 bg-indigo-500 rounded-full"></span>
+                    <span class="h-8 w-1 bg-indigo-500 rounded-full"></span>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <i class="fa-solid fa-cloud text-sky-400 text-2xl"></i>
+                    <span class="text-xs font-bold text-slate-500 uppercase">Region</span>
+                </div>
+                <h3 class="text-slate-400 text-sm mb-1">Azure Deployment</h3>
+                <p class="text-2xl font-bold">East US 2</p>
+                <p class="text-xs text-emerald-400 mt-4"><i class="fa-solid fa-circle-check mr-1"></i> Connected to Terraform</p>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl">
+            <h3 class="text-xl font-bold mb-6">Recent System Logs</h3>
+            <div id="log-container" class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-slate-700">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded bg-indigo-500/20 flex items-center justify-center text-indigo-400 mr-4 font-bold">D</div>
+                        <div>
+                            <p class="font-medium text-sm">Docker Compose Up</p>
+                            <p class="text-xs text-slate-500">Milestone 1 execution successful</p>
+                        </div>
+                    </div>
+                    <span class="text-xs text-slate-500">2 mins ago</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        async function fetchBackendStatus() {
+            try {
+                // Backend API call
+                const response = await fetch('http://localhost:5000/api/status');
+                const data = await response.json();
+                
+                // UI update kar rahe hain data ke sath
+                document.getElementById('backend-status').innerText = data.status;
+                document.getElementById('backend-status').classList.remove('text-indigo-300');
+                document.getElementById('backend-status').classList.add('text-emerald-400');
+                
+                // Progress bar ko 100% kar dena jab connect ho jaye
+                document.getElementById('backend-bar').style.width = "100%";
+                
+                document.getElementById('system-msg').innerText = "Live: Connection Stable";
+            } catch (error) {
+                console.log("Backend offline or CORS issue");
+                document.getElementById('backend-status').innerText = "Offline";
+                document.getElementById('backend-status').classList.add('text-red-400');
+            }
+        }
+
+        // Har 5 seconds baad update karo
+        setInterval(fetchBackendStatus, 5000);
+        // Pehli baar foran chalao
+        fetchBackendStatus();
+    </script>
+    </body>
+</html>
