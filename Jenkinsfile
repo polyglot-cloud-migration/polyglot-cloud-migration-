@@ -12,8 +12,8 @@ pipeline {
                     sh '''
                         ssh -o StrictHostKeyChecking=no azureuser@20.205.30.136 "
                             cd /home/azureuser/polyglot-cloud-migration- &&
-                            docker compose -f docker-compose.prod.yml pull &&
-                            docker compose -f docker-compose.prod.yml up -d
+                            docker-compose -f docker-compose.prod.yml pull &&
+                            docker-compose -f docker-compose.prod.yml up -d
                         "
                     '''
                 }
